@@ -1,22 +1,29 @@
 package nikolaj.galgespil;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Spil extends AppCompatActivity implements View.OnClickListener {
+public class Spil extends Activity implements View.OnClickListener {
 
     //Variabler erklæres globalt så de kan bruges i hele klassen
     private TextView infotekst, besked;
     public boolean clicked = false;
 
+    public Galgelogik getLogik() {
+        return logik;
+    }
+
     // Der oprettes et objekt af klassen Galgelogik
     Galgelogik logik = new Galgelogik();
+
 
 
     @Override
@@ -25,12 +32,7 @@ public class Spil extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_spil);
 
         infotekst = (TextView) findViewById(R.id.textView_infotekst);
-        infotekst.setText("Mon du kan gætte ordet? \n" +
-                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
-                "\n [ " + logik.getSynligtOrd() + " ]");
-
         besked = (TextView) findViewById(R.id.textView_besked);
-
 
         Button buttontjek = (Button) findViewById(R.id.button_tjek);
         buttontjek.setOnClickListener(this);
@@ -38,14 +40,41 @@ public class Spil extends AppCompatActivity implements View.OnClickListener {
         Button buttonspiligen = (Button) findViewById(R.id.button_spiligen);
         buttonspiligen.setOnClickListener(this);
 
-        //Angiver det synlige ord i loggen
-        Log.i("Ordet er: ", logik.getOrdet());
+        besked.setText("Henter ord fra DRs server....");
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object... arg0) {
+                try {
+                    logik.hentOrdFraDr();
+                    return "Ordene blev korrekt hentet fra DR's server";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "Ordene blev ikke hentet korrekt: "+e;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object resultat) {
+                besked.setText("resultat: \n" + resultat);
+            }
+        }.execute();
+
+
+
+        infotekst.setText("Mon du kan gætte ordet? \n" +
+                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
+                "\n [ " + logik.getSynligtOrd() + " ]");
+
+
+
 
     }
 
 
     @Override
     public void onClick(View view) {
+        System.out.println("ordet er:" + logik.getOrdet());
+        logik.logStatus();
         switch (view.getId()) {
 
             case R.id.button_tjek:
@@ -75,7 +104,11 @@ public class Spil extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    private void opdaterSkærm() {
+    public void opdaterSkærm() {
+
+        FragmentManager fragmentmanager = getFragmentManager();
+        FragmentTransaction fragmentTransmision = fragmentmanager.beginTransaction();
+
         //Gør knappen 'Spil igen' usynlig.
         findViewById(R.id.button_spiligen).setVisibility(View.INVISIBLE);
 
@@ -106,26 +139,44 @@ public class Spil extends AppCompatActivity implements View.OnClickListener {
 
         /*Hvis spillet er vundet; skrives en besked, 'spil igen' knap bliver synlig, og hvis den
         trykkes, nulstilles logik, og skærm opdateres.*/
+
+
         if (logik.erSpilletVundet()) {
-            infotekst.setText("Du har vundet! Du gættede ordet: " + logik.getOrdet());
-            findViewById(R.id.button_spiligen).setVisibility(View.VISIBLE);
-            if (clicked == true) {
-                logik.nulstil();
-                opdaterSkærm();
+            VinderFrag vinderFrag = new VinderFrag();
+            fragmentTransmision.add(R.id.fragment, vinderFrag);
+            fragmentTransmision.commit();
+
+//
+//
+//            findViewById(R.id.button_spiligen).setVisibility(View.VISIBLE);
+//            if (clicked == true) {
+//                logik.nulstil();
+//                opdaterSkærm();
+//            }
+//            clicked = false;
+       }
+
+            if (logik.erSpilletTabt()) {
+                TaberFrag taberFrag = new TaberFrag();
+                fragmentTransmision.add(R.id.fragment, taberFrag);
+                fragmentTransmision.commit();
+
+//
+//            infotekst.setText("Du har tabt! Ordet var: " + logik.getOrdet());
+//            findViewById(R.id.button_spiligen).setVisibility(View.VISIBLE);
+//            if (clicked == true) {
+//                logik.nulstil();
+//                opdaterSkærm();
+//            }
+//            clicked = false;
+//        }
             }
-            clicked = false;
+
+
         }
 
-        if (logik.erSpilletTabt()) {
-            infotekst.setText("Du har tabt! Ordet var: " + logik.getOrdet());
-            findViewById(R.id.button_spiligen).setVisibility(View.VISIBLE);
-            if (clicked == true) {
-                logik.nulstil();
-                opdaterSkærm();
-            }
-            clicked = false;
-        }
+    public void closeFragment() {
+        getFragmentManager().popBackStack();
     }
 
-
-}
+    }

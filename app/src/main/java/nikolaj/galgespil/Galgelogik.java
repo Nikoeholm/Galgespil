@@ -58,16 +58,16 @@ public class Galgelogik { private ArrayList<String> muligeOrd = new ArrayList<St
 
 
     public Galgelogik() {
-        muligeOrd.add("bil");
+        muligeOrd.add("spil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
-        muligeOrd.add("motorvej");
-        muligeOrd.add("busrute");
-        muligeOrd.add("gangsti");
-        muligeOrd.add("skovsnegl");
-        muligeOrd.add("solsort");
-        muligeOrd.add("seksten");
-        muligeOrd.add("sytten");
+        muligeOrd.add("android");
+        muligeOrd.add("galgespil");
+        muligeOrd.add("smartphone");
+        muligeOrd.add("projekt");
+        muligeOrd.add("versionering");
+        muligeOrd.add("string");
+        muligeOrd.add("layout");
         nulstil();
     }
 
