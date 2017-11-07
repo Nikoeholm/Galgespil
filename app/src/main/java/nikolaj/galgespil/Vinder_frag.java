@@ -14,23 +14,23 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VinderFrag extends Fragment implements View.OnClickListener {
+public class Vinder_frag extends Fragment implements View.OnClickListener {
 
     public boolean clicked = false;
     TextView vinderBesked, ordet;
     Button spiligen;
 
-    public VinderFrag() {
+    public Vinder_frag() {
         // Required empty public constructor
     }
 
     //Galgelogik logik = new Galgelogik();
-    Spil spil = new Spil();
+    Spil_akt spil = new Spil_akt();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vinder, container, false);
-        Spil spil = (Spil) getActivity();
+        Spil_akt spil = (Spil_akt) getActivity();
         String ord = spil.getLogik().getOrdet();
 
         vinderBesked= (TextView) view.findViewById(R.id.vinder_info);
@@ -49,7 +49,7 @@ public class VinderFrag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(getActivity().getApplicationContext(), Spil.class));
+        startActivity(new Intent(getActivity().getApplicationContext(), Spil_akt.class));
 
 
         }

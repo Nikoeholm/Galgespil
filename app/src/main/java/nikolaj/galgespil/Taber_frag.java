@@ -13,22 +13,22 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaberFrag extends Fragment implements View.OnClickListener {
+public class Taber_frag extends Fragment implements View.OnClickListener {
 
     TextView taberBesked, ordet;
     Button spiligen;
 
-    public TaberFrag() {
+    public Taber_frag() {
         // Required empty public constructor
         }
 
     Galgelogik logik = new Galgelogik();
-    Spil spil = new Spil();
+    Spil_akt spil = new Spil_akt();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_taber, container, false);
-        Spil spil = (Spil) getActivity();
+        Spil_akt spil = (Spil_akt) getActivity();
         String ord = spil.getLogik().getOrdet();
 
         TextView taberBesked = (TextView) view.findViewById(R.id.taber_info);

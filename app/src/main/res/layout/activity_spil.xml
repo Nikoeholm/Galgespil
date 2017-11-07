@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nikolaj.galgespil.Spil">
+    tools:context="nikolaj.galgespil.Spil_akt">
 
     <EditText
         android:id="@+id/editText_indtast"

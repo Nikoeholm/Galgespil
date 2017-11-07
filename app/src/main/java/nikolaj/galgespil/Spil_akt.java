@@ -11,19 +11,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Spil extends Activity implements View.OnClickListener {
+public class Spil_akt extends Activity implements View.OnClickListener {
 
     //Variabler erklæres globalt så de kan bruges i hele klassen
     private TextView infotekst, besked;
-    public boolean clicked = false;
-
-    public Galgelogik getLogik() {
-        return logik;
-    }
 
     // Der oprettes et objekt af klassen Galgelogik
     Galgelogik logik = new Galgelogik();
 
+    public Galgelogik getLogik() {
+        return logik;
+    }
 
 
     @Override
@@ -37,8 +35,6 @@ public class Spil extends Activity implements View.OnClickListener {
         Button buttontjek = (Button) findViewById(R.id.button_tjek);
         buttontjek.setOnClickListener(this);
 
-        Button buttonspiligen = (Button) findViewById(R.id.button_spiligen);
-        buttonspiligen.setOnClickListener(this);
 
         besked.setText("Henter ord fra DRs server....");
         new AsyncTask() {
@@ -91,10 +87,6 @@ public class Spil extends Activity implements View.OnClickListener {
 
                 break;
 
-            case R.id.button_spiligen:
-                clicked = true;
-                break;
-
             default:
                 break;
 
@@ -108,9 +100,6 @@ public class Spil extends Activity implements View.OnClickListener {
 
         FragmentManager fragmentmanager = getFragmentManager();
         FragmentTransaction fragmentTransmision = fragmentmanager.beginTransaction();
-
-        //Gør knappen 'Spil igen' usynlig.
-        findViewById(R.id.button_spiligen).setVisibility(View.INVISIBLE);
 
         infotekst.setText("Mon du kan gætte ordet? \n" +
                 "Det består af " + logik.getOrdet().length() + " bogstaver! " +
@@ -137,46 +126,22 @@ public class Spil extends Activity implements View.OnClickListener {
             img.setImageResource(R.drawable.forkert6);
         }
 
-        /*Hvis spillet er vundet; skrives en besked, 'spil igen' knap bliver synlig, og hvis den
-        trykkes, nulstilles logik, og skærm opdateres.*/
+        //Hvis spillet er vundet er vundet eller tabt, startes et fragment
 
 
         if (logik.erSpilletVundet()) {
-            VinderFrag vinderFrag = new VinderFrag();
+            Vinder_frag vinderFrag = new Vinder_frag();
             fragmentTransmision.add(R.id.fragment, vinderFrag);
             fragmentTransmision.commit();
-
-//
-//
-//            findViewById(R.id.button_spiligen).setVisibility(View.VISIBLE);
-//            if (clicked == true) {
-//                logik.nulstil();
-//                opdaterSkærm();
-//            }
-//            clicked = false;
-       }
-
-            if (logik.erSpilletTabt()) {
-                TaberFrag taberFrag = new TaberFrag();
-                fragmentTransmision.add(R.id.fragment, taberFrag);
-                fragmentTransmision.commit();
-
-//
-//            infotekst.setText("Du har tabt! Ordet var: " + logik.getOrdet());
-//            findViewById(R.id.button_spiligen).setVisibility(View.VISIBLE);
-//            if (clicked == true) {
-//                logik.nulstil();
-//                opdaterSkærm();
-//            }
-//            clicked = false;
-//        }
-            }
-
-
+            findViewById(R.id.button_tjek).setVisibility(View.INVISIBLE);
         }
 
-    public void closeFragment() {
-        getFragmentManager().popBackStack();
+        if (logik.erSpilletTabt()) {
+            Taber_frag taberFrag = new Taber_frag();
+            fragmentTransmision.add(R.id.fragment, taberFrag);
+            fragmentTransmision.commit();
+            findViewById(R.id.button_tjek).setVisibility(View.INVISIBLE);
+        }
     }
 
-    }
+}

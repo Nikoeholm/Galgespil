@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nikolaj.galgespil.Regler">
+    tools:context="nikolaj.galgespil.Regler_akt">
 
     <TextView
         android:id="@+id/textView_headRegler"
