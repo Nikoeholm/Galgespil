@@ -2,6 +2,7 @@ package nikolaj.galgespil;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,8 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
         // Required empty public constructor
         }
 
-    Galgelogik logik = new Galgelogik();
-    Spil_akt spil = new Spil_akt();
+//    Galgelogik logik = new Galgelogik();
+//    Spil_akt spil = new Spil_akt();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
         Spil_akt spil = (Spil_akt) getActivity();
         String ord = spil.getLogik().getOrdet();
 
-        TextView taberBesked = (TextView) view.findViewById(R.id.taber_info);
+        taberBesked = (TextView) view.findViewById(R.id.taber_info);
         taberBesked.setText("Du har tabt! Ordet var:");
 
         ordet = (TextView) view.findViewById(R.id.taber_ordet);
@@ -46,7 +47,8 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        logik.nulstil();
-        spil.opdaterSkærm();
+        getActivity().finish();
+        startActivity(new Intent(getActivity().getApplicationContext(), Spil_akt.class));
+
     }
 }

@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".Spil_akt" />
         <activity android:name=".Regler_akt" />
-        <activity android:name=".Indstillinger_akt"></activity>
+        <activity android:name=".Indstillinger_akt" />
+        <activity android:name=".Hichscore_akt"></activity>
     </application>
 
 </manifest>

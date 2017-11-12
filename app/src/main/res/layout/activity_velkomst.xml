@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="8dp"
     tools:context="nikolaj.galgespil.Velkomst_akt">
 
     <TextView
@@ -14,9 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="sans-serif"
-        android:text="Velkommen til 'Galgespillet'"
+        android:text="Velkommen til Galgespillet"
         android:textColor="?attr/actionMenuTextColor"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:paddingTop="10dp"/>
 
 
 
@@ -30,10 +32,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
+        android:paddingTop="30dp"
         android:orientation="vertical"
         android:layout_weight="1">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <Button
+            android:id="@+id/button_indstillinger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_dark"
+            android:onClick="OnClickListener"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:padding="8dp"
+            android:paddingBottom="8dp"
+            android:text="Indtast navn"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button_startspil"
@@ -47,6 +67,12 @@
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_regler"
@@ -56,23 +82,25 @@
             android:background="@android:color/holo_blue_dark"
             android:onClick="OnClickListener"
             android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
             android:text="Regler"
             android:textColor="@android:color/background_light"
             android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/button_indstillinger"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
-            android:onClick="OnClickListener"
-            android:layout_marginBottom="8dp"
-            android:padding="8dp"
-            android:paddingBottom="8dp"
-            android:text="Indstillinger"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp" />
+            <Button
+                android:id="@+id/button_highscore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/holo_blue_dark"
+                android:onClick="OnClickListener"
+                android:layout_marginBottom="8dp"
+                android:text="Highscore"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

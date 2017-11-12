@@ -3,6 +3,8 @@ package nikolaj.galgespil;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +16,9 @@ import android.widget.TextView;
 public class Spil_akt extends Activity implements View.OnClickListener {
 
     //Variabler erklæres globalt så de kan bruges i hele klassen
-    private TextView infotekst, besked;
+    private TextView infotekst, besked, ordtype;
+    private Button buttontjek;
+    private ImageView img;
 
     // Der oprettes et objekt af klassen Galgelogik
     Galgelogik logik = new Galgelogik();
@@ -31,39 +35,37 @@ public class Spil_akt extends Activity implements View.OnClickListener {
 
         infotekst = (TextView) findViewById(R.id.textView_infotekst);
         besked = (TextView) findViewById(R.id.textView_besked);
+        ordtype = (TextView) findViewById(R.id.textView_ordtype);
 
-        Button buttontjek = (Button) findViewById(R.id.button_tjek);
+        buttontjek = (Button) findViewById(R.id.button_tjek);
         buttontjek.setOnClickListener(this);
 
+        img = (ImageView) findViewById(R.id.image_galge);
+        img.setImageResource(R.drawable.galge);
 
-        besked.setText("Henter ord fra DRs server....");
+
+        ordtype.setText("Henter ord fra DRs server....");
+
         new AsyncTask() {
             @Override
             protected Object doInBackground(Object... arg0) {
                 try {
                     logik.hentOrdFraDr();
-                    return "Ordene blev korrekt hentet fra DR's server";
+                    return "Ordene blev korrekt hentet fra DR's server.";
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return "Ordene blev ikke hentet korrekt: "+e;
+                    return "Ordene blev ikke hentet korrekt.: "+e;
                 }
             }
 
             @Override
             protected void onPostExecute(Object resultat) {
-                besked.setText("resultat: \n" + resultat);
+                ordtype.setText("Status: \n" + resultat);
             }
         }.execute();
 
 
-
-        infotekst.setText("Mon du kan gætte ordet? \n" +
-                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
-                "\n [ " + logik.getSynligtOrd() + " ]");
-
-
-
-
+        LoadPreferences();
     }
 
 
@@ -101,15 +103,18 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         FragmentManager fragmentmanager = getFragmentManager();
         FragmentTransaction fragmentTransmision = fragmentmanager.beginTransaction();
 
-        infotekst.setText("Mon du kan gætte ordet? \n" +
-                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
-                "\n [ " + logik.getSynligtOrd() + " ]");
+        LoadPreferences();
+
+//        infotekst.setText("Mon du kan gætte ordet? \n" +
+//                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
+//                "\n [ " + logik.getSynligtOrd() + " ]");
 
         besked.setText("Du har prøvet " + logik.getBrugteBogstaver().size() + " bogstaver:\n" + logik.getBrugteBogstaver());
+        ordtype.setText("Antal forkerte bogstaver: " + logik.getAntalForkerteBogstaver());
 
 
         //Angivelse af billede efter antal forkerte.
-        ImageView img = (ImageView) findViewById(R.id.imageView4);
+        ImageView img = (ImageView) findViewById(R.id.image_galge);
         if (logik.getAntalForkerteBogstaver() == 0) {
             img.setImageResource(R.drawable.galge);
         } else if (logik.getAntalForkerteBogstaver() == 1) {
@@ -142,6 +147,26 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             fragmentTransmision.commit();
             findViewById(R.id.button_tjek).setVisibility(View.INVISIBLE);
         }
+
+
+    }
+    private void LoadPreferences(){
+        SharedPreferences sharedPref = getSharedPreferences("brugerinfo", Context.MODE_PRIVATE);
+        String fornavn = sharedPref.getString("fornavn", "");
+        String efternavn = sharedPref.getString("efternavn", "");
+   //     boolean switchState = sharedPref.getBoolean("DRord", false);
+
+        infotekst.setText("Mon du kan gætte ordet " + fornavn + " " + efternavn +"? \n" +
+                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
+                "\n [ " + logik.getSynligtOrd() + " ]");
+
+//        if(switchState == true){
+//            System.out.println("Switch checked");
+//
+//        }
+//        else if(switchState == false){
+//            System.out.println("Switch not checked");
+//        }
     }
 
 }

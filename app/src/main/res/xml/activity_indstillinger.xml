@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+<EditTextPreference
+    android:title="Indtast navn"
+    android:key="indstillinger_navn"
+    android:summary="Vælg dit navn eller et game-tag"/>
+
+    <SwitchPreference
+        android:title="Hent ord fra DR's hjemmeside"
+        android:key="indstillinger_DR"
+        android:defaultValue="false"
+        android:summary="Vælg om ordet skal hemtes fra DR's hjemmeside eller om det blot skal være fra den lokale hukommelse"/>
+
+</PreferenceScreen>

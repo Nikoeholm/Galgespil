@@ -25,7 +25,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     }
 
     //Galgelogik logik = new Galgelogik();
-    Spil_akt spil = new Spil_akt();
+   // Spil_akt spil = new Spil_akt();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        getActivity().finish();
         startActivity(new Intent(getActivity().getApplicationContext(), Spil_akt.class));
 
 
