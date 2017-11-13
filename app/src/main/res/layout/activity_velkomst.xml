@@ -40,20 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <Button
-            android:id="@+id/button_indstillinger"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
-            android:onClick="OnClickListener"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:padding="8dp"
-            android:paddingBottom="8dp"
-            android:text="Indtast navn"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button_startspil"
@@ -63,10 +49,25 @@
             android:background="@android:color/holo_blue_dark"
             android:onClick="OnClickListener"
             android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
             android:text="Start spil"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:visibility="visible" />
+
+            <Button
+                android:id="@+id/button_indstillinger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/holo_blue_dark"
+                android:onClick="OnClickListener"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp"
+                android:paddingBottom="8dp"
+                android:text="Indstillinger"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout

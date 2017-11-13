@@ -16,7 +16,6 @@ import android.widget.TextView;
  */
 public class Vinder_frag extends Fragment implements View.OnClickListener {
 
-    public boolean clicked = false;
     TextView vinderBesked, ordet;
     Button spiligen;
 

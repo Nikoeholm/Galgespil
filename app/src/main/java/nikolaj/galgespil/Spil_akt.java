@@ -3,10 +3,10 @@ package nikolaj.galgespil;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +19,9 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     private TextView infotekst, besked, ordtype;
     private Button buttontjek;
     private ImageView img;
+    private String spilTag;
+    private boolean DRord;
+    private int score;
 
     // Der oprettes et objekt af klassen Galgelogik
     Galgelogik logik = new Galgelogik();
@@ -26,7 +29,6 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     public Galgelogik getLogik() {
         return logik;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,31 +45,40 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         img = (ImageView) findViewById(R.id.image_galge);
         img.setImageResource(R.drawable.galge);
 
-
-        ordtype.setText("Henter ord fra DRs server....");
-
-        new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object... arg0) {
-                try {
-                    logik.hentOrdFraDr();
-                    return "Ordene blev korrekt hentet fra DR's server.";
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return "Ordene blev ikke hentet korrekt.: "+e;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Object resultat) {
-                ordtype.setText("Status: \n" + resultat);
-            }
-        }.execute();
-
-
         LoadPreferences();
-    }
 
+        if(DRord == true){
+            ordtype.setText("Henter ord fra DRs server....");
+//Hentet fra AndroidElementer
+            new AsyncTask() {
+                @Override
+                protected Object doInBackground(Object... arg0) {
+                    try {
+                        logik.hentOrdFraDr();
+                        return "Ordene blev korrekt hentet fra DR's server.";
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return "Ordene blev ikke hentet korrekt.: "+e;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(Object resultat) {
+                    ordtype.setText("Status: \n" + resultat);
+                    opdaterSkærm();
+                }
+            }.execute();
+        }
+
+        else {
+            System.out.println("Henter prædefinerede ord");
+            ordtype.setText("Ord valgt fra hukommenlsen");
+            opdaterSkærm();
+        }
+
+
+
+    }
 
     @Override
     public void onClick(View view) {
@@ -105,9 +116,9 @@ public class Spil_akt extends Activity implements View.OnClickListener {
 
         LoadPreferences();
 
-//        infotekst.setText("Mon du kan gætte ordet? \n" +
-//                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
-//                "\n [ " + logik.getSynligtOrd() + " ]");
+        infotekst.setText("Mon du kan gætte ordet " + spilTag +"? \n" +
+                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
+                "\n [ " + logik.getSynligtOrd() + " ]");
 
         besked.setText("Du har prøvet " + logik.getBrugteBogstaver().size() + " bogstaver:\n" + logik.getBrugteBogstaver());
         ordtype.setText("Antal forkerte bogstaver: " + logik.getAntalForkerteBogstaver());
@@ -139,6 +150,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             fragmentTransmision.add(R.id.fragment, vinderFrag);
             fragmentTransmision.commit();
             findViewById(R.id.button_tjek).setVisibility(View.INVISIBLE);
+            score = getLogik().getAntalForkerteBogstaver();
         }
 
         if (logik.erSpilletTabt()) {
@@ -151,22 +163,15 @@ public class Spil_akt extends Activity implements View.OnClickListener {
 
     }
     private void LoadPreferences(){
-        SharedPreferences sharedPref = getSharedPreferences("brugerinfo", Context.MODE_PRIVATE);
-        String fornavn = sharedPref.getString("fornavn", "");
-        String efternavn = sharedPref.getString("efternavn", "");
-   //     boolean switchState = sharedPref.getBoolean("DRord", false);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        spilTag = sharedPref.getString("indstillinger_spilTag", "");
+        DRord = sharedPref.getBoolean("indstillinger_DR", true);
 
-        infotekst.setText("Mon du kan gætte ordet " + fornavn + " " + efternavn +"? \n" +
-                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
-                "\n [ " + logik.getSynligtOrd() + " ]");
 
-//        if(switchState == true){
-//            System.out.println("Switch checked");
-//
-//        }
-//        else if(switchState == false){
-//            System.out.println("Switch not checked");
-//        }
+//        infotekst.setText("Mon du kan gætte ordet " + spilTag +"? \n" +
+//                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
+//                "\n [ " + logik.getSynligtOrd() + " ]");
+
     }
 
 }

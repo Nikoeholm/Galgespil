@@ -3,7 +3,7 @@
 
 <EditTextPreference
     android:title="Indtast navn"
-    android:key="indstillinger_navn"
+    android:key="indstillinger_spilTag"
     android:summary="Vælg dit navn eller et game-tag"/>
 
     <SwitchPreference
