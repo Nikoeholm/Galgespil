@@ -9,8 +9,7 @@ import android.widget.Button;
 
 public class Velkomst_akt extends AppCompatActivity implements OnClickListener {
 
-    //Knapperne erklæres globalt så de kan tilgås i alle metoder.
-    Button buttonstart, buttonregler, buttonindstillinger, buttonhighscorer;
+        Button buttonstart, buttonregler, buttonindstillinger, buttonhighscorer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -23,9 +23,6 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
         // Required empty public constructor
         }
 
-//    Galgelogik logik = new Galgelogik();
-//    Spil_akt spil = new Spil_akt();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_taber, container, false);

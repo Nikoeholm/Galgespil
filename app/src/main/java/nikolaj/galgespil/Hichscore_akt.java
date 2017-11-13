@@ -1,34 +1,99 @@
 package nikolaj.galgespil;
 
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class Hichscore_akt extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    ListView highscoreListe;
+    ArrayList<Spiller> spillere;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hichscorer_akt);
 
-        String[] lande = {"Danmark", "Norge", "Sverige", "Finland", "Holland", "Italien", "Tyskland",
-                "Frankrig", "Spanien", "Portugal", "Nepal", "Indien", "Kina", "Japan", "Thailand"};
+        highscoreListe = (ListView) findViewById(R.id.highscore_list);
+        spillere = new ArrayList();
+        fyldSpillerArray();
+        System.out.println("Spillere med i spillet: "+spillere);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1, lande);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.liste_element_layout, R.id.listeelem_navn, spillere){
 
-        ListView listView = new ListView(this);
-        listView.setOnItemClickListener(this);
-        listView.setAdapter(adapter);
+            @Override
+            public View getView(int position, View cachedView, ViewGroup parent) {
+                View view = super.getView(position, cachedView, parent);
 
-        setContentView(listView);
+                TextView rang = view.findViewById(R.id.listeelem_beskrivelse);
+                rang.setText((position+1)+". pladsen -"+" antal forkerte: " + spillere.get(position).getScore());
+                ImageView trofae = view.findViewById(R.id.listeelem_billede);
+
+                switch (position){
+                    case 0:
+                        trofae.setImageResource(R.drawable.galge);
+                        break;
+                    case 1:
+                        trofae.setImageResource(R.drawable.galge);
+                        break;
+
+                    case 2:
+                        trofae.setImageResource(R.drawable.galge);
+                        break;
+                    default:
+                        trofae.setImageResource(R.drawable.galge);
+                        break;
+
+                }
+
+                return view;
+            }
+
+        };
+
+        highscoreListe.setAdapter(adapter);
     }
 
-    public void onItemClick(AdapterView<?> liste, View v, int position, long id) {
-        Toast.makeText(this, "Klik på " + position, Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+    public void fyldSpillerArray() {
+        HighscoreDB highscoreDB = new HighscoreDB(this);
+        SQLiteDatabase db = highscoreDB.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM spillere ORDER BY score ASC;", null);
+
+        while (cursor.moveToNext()) {
+
+            while (cursor.moveToNext()) {
+
+                spillere.add(new Spiller(cursor.getString(1), cursor.getInt(2)));
+            }
+
+            cursor.close();
+            db.close();
+            System.out.println(spillere.toString());
+
+        }
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 }
 

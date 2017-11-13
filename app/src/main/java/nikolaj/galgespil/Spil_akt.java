@@ -21,7 +21,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     private ImageView img;
     private String spilTag;
     private boolean DRord;
-    private int score;
+    //private int antalForsøg;
 
     // Der oprettes et objekt af klassen Galgelogik
     Galgelogik logik = new Galgelogik();
@@ -75,9 +75,6 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             ordtype.setText("Ord valgt fra hukommenlsen");
             opdaterSkærm();
         }
-
-
-
     }
 
     @Override
@@ -142,15 +139,19 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             img.setImageResource(R.drawable.forkert6);
         }
 
-        //Hvis spillet er vundet er vundet eller tabt, startes et fragment
-
-
+        //Hvis spillet er vundet eller tabt, startes et fragment
         if (logik.erSpilletVundet()) {
             Vinder_frag vinderFrag = new Vinder_frag();
             fragmentTransmision.add(R.id.fragment, vinderFrag);
             fragmentTransmision.commit();
             findViewById(R.id.button_tjek).setVisibility(View.INVISIBLE);
-            score = getLogik().getAntalForkerteBogstaver();
+
+
+            Bundle arg = new Bundle();
+            arg.putInt("antalForsøg", logik.getAntalForkerteBogstaver());
+            vinderFrag.setArguments(arg);
+
+
         }
 
         if (logik.erSpilletTabt()) {
@@ -160,17 +161,11 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             findViewById(R.id.button_tjek).setVisibility(View.INVISIBLE);
         }
 
-
     }
     private void LoadPreferences(){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         spilTag = sharedPref.getString("indstillinger_spilTag", "");
-        DRord = sharedPref.getBoolean("indstillinger_DR", true);
-
-
-//        infotekst.setText("Mon du kan gætte ordet " + spilTag +"? \n" +
-//                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
-//                "\n [ " + logik.getSynligtOrd() + " ]");
+        DRord = sharedPref.getBoolean("indstillinger_DR", false);
 
     }
 
