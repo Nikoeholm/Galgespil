@@ -21,7 +21,6 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     private ImageView img;
     private String spilTag;
     private boolean DRord;
-    //private int antalForsøg;
 
     // Der oprettes et objekt af klassen Galgelogik
     Galgelogik logik = new Galgelogik();
@@ -148,7 +147,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
 
 
             Bundle arg = new Bundle();
-            arg.putInt("antalForsøg", logik.getAntalForkerteBogstaver());
+            arg.putInt("antalForkerte", logik.getAntalForkerteBogstaver());
             vinderFrag.setArguments(arg);
 
 

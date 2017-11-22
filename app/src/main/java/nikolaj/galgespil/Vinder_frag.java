@@ -24,7 +24,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     TextView vinderBesked, ordet;
     Button spiligen;
     String spilTag;
-    int antalForsøg;
+    int antalForkerte;
 
     public Vinder_frag() {
         // Required empty public constructor
@@ -49,7 +49,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
         spiligen = (Button) view.findViewById(R.id.vinder_spiligen);
         spiligen.setOnClickListener(this);
 
-        antalForsøg = getArguments().getInt("antalForsøg");
+        antalForkerte = getArguments().getInt("antalForkerte");
 
         return view;
 
@@ -64,12 +64,10 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
         HighscoreDB highscoreDB = new HighscoreDB(getActivity());
         SQLiteDatabase db = highscoreDB.getWritableDatabase();
 
-//        Galgelogik logik = new Galgelogik();
-//        int forkerteBogstaver = logik.getAntalForkerteBogstaver();
-
+//SpilTag og antalforkerte indsættes i Highscoren.
         ContentValues række = new ContentValues();
         række.put(HighscoreDB.NAVN, spilTag );
-        række.put(HighscoreDB.SCORE, antalForsøg);
+        række.put(HighscoreDB.SCORE, antalForkerte);
         db.insert(HighscoreDB.TABLE, null, række);
         Toast.makeText(getActivity(), "Tilføjet til Highscore", Toast.LENGTH_LONG).show();
 

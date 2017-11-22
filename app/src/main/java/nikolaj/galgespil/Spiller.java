@@ -1,9 +1,5 @@
 package nikolaj.galgespil;
 
-/**
- * Created by Nikolaj on 13-11-2017.
- */
-
 public class Spiller {
     String initialer;
     int score;
