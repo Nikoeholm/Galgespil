@@ -48,17 +48,17 @@ public class Hichscore_akt extends AppCompatActivity implements AdapterView.OnIt
 
                 switch (position){
                     case 0:
-                        trofae.setImageResource(R.drawable.galge);
+                        trofae.setImageResource(R.drawable.first_medal);
                         break;
                     case 1:
-                        trofae.setImageResource(R.drawable.galge);
+                        trofae.setImageResource(R.drawable.second_medal);
                         break;
 
                     case 2:
-                        trofae.setImageResource(R.drawable.galge);
+                        trofae.setImageResource(R.drawable.third_medal);
                         break;
                     default:
-                        trofae.setImageResource(R.drawable.galge);
+                        trofae.setImageResource(R.drawable.thumb_up);
                         break;
 
                 }
