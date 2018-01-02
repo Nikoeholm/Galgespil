@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,6 +44,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
 
         img = (ImageView) findViewById(R.id.image_galge);
         img.setImageResource(R.drawable.galge);
+
 
         LoadPreferences();
 
@@ -144,6 +146,9 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             fragmentTransmision.add(R.id.fragment, vinderFrag);
             fragmentTransmision.commit();
             findViewById(R.id.button_tjek).setVisibility(View.INVISIBLE);
+
+            MediaPlayer mp = MediaPlayer.create(this, R.raw.winner_sound);
+            mp.start();
 
 
             Bundle arg = new Bundle();
