@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,12 +15,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+
 public class Spil_akt extends Activity implements View.OnClickListener {
 
     //Variabler erklæres globalt så de kan bruges i hele klassen
     private TextView infotekst, besked, ordtype;
     private Button buttontjek;
     private ImageView img;
+    private KonfettiView konfettiView;
     private String spilTag;
     private boolean DRord;
 
@@ -35,15 +41,17 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spil);
 
-        infotekst = (TextView) findViewById(R.id.textView_infotekst);
-        besked = (TextView) findViewById(R.id.textView_besked);
-        ordtype = (TextView) findViewById(R.id.textView_ordtype);
+        infotekst = findViewById(R.id.textView_infotekst);
+        besked = findViewById(R.id.textView_besked);
+        ordtype = findViewById(R.id.textView_ordtype);
 
-        buttontjek = (Button) findViewById(R.id.button_tjek);
+        buttontjek = findViewById(R.id.button_tjek);
         buttontjek.setOnClickListener(this);
 
-        img = (ImageView) findViewById(R.id.image_galge);
+        img = findViewById(R.id.image_galge);
         img.setImageResource(R.drawable.galge);
+
+        konfettiView = findViewById(R.id.confetti);
 
 
         LoadPreferences();
@@ -146,6 +154,17 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             fragmentTransmision.add(R.id.fragment, vinderFrag);
             fragmentTransmision.commit();
             findViewById(R.id.button_tjek).setVisibility(View.INVISIBLE);
+
+            konfettiView.build()
+                    .addColors(Color.YELLOW, Color.BLUE, Color.RED)
+                    .setDirection(0.0, 359.0)
+                    .setSpeed(1f, 5f)
+                    .setFadeOutEnabled(true)
+                    .setTimeToLive(1500L)
+                    .addShapes(Shape.CIRCLE, Shape.RECT)
+                    .addSizes(new Size(12, 5f))
+                    .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                    .stream(300, 5000L);
 
             MediaPlayer mp = MediaPlayer.create(this, R.raw.winner_sound);
             mp.start();

@@ -29,5 +29,6 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
 
-    complie 'nl.dionsegijn:konfetti:1.1.0'
+//Konfetti compiles fra: https://github.com/DanielMartinus/Konfetti/tree/master/demo-google-play/src/main/java/nl/dionsegijn
+    compile 'nl.dionsegijn:konfetti:1.1.0'
 }
