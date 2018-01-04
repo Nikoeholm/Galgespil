@@ -26,7 +26,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     private Button buttontjek;
     private ImageView img;
     private KonfettiView konfettiView;
-    private String spilTag;
+    private String spilTag, message;
     private boolean DRord;
 
     // Der oprettes et objekt af klassen Galgelogik
@@ -54,6 +54,9 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         konfettiView = findViewById(R.id.confetti);
 
 
+        Bundle bundle = getIntent().getExtras();
+        message = bundle.getString("ValgtOrd");
+
         LoadPreferences();
 
         if(DRord == true){
@@ -78,6 +81,10 @@ public class Spil_akt extends Activity implements View.OnClickListener {
                 }
             }.execute();
         }
+
+//        else if(message = logik.getOrdet()){
+//            logik.
+//        }
 
         else {
             System.out.println("Henter prædefinerede ord");
@@ -120,7 +127,9 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         FragmentManager fragmentmanager = getFragmentManager();
         FragmentTransaction fragmentTransmision = fragmentmanager.beginTransaction();
 
-        LoadPreferences();
+         LoadPreferences();
+
+        System.out.println("Valgt ord gemt i Spil_akt: " + message);
 
         infotekst.setText("Mon du kan gætte ordet " + spilTag +"? \n" +
                 "Det består af " + logik.getOrdet().length() + " bogstaver! " +
@@ -189,6 +198,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         spilTag = sharedPref.getString("indstillinger_spilTag", "");
         DRord = sharedPref.getBoolean("indstillinger_DR", false);
+
 
     }
 

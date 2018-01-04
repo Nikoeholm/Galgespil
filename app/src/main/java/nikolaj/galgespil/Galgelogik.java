@@ -145,7 +145,7 @@ public class Galgelogik { private ArrayList<String> muligeOrd = new ArrayList<St
 
     public void hentOrdFraDr() throws Exception {
         String data = hentUrl("https://dr.dk");
-        //System.out.println("data = " + data);
+        System.out.println("data = " + data);
 
         data = data.substring(data.indexOf("<body")). // fjern headere
                 replaceAll("<.+?>", " ").toLowerCase(). // fjern tags
