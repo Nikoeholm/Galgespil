@@ -3,6 +3,7 @@ package nikolaj.galgespil;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -15,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
@@ -26,8 +29,9 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     private Button buttontjek;
     private ImageView img;
     private KonfettiView konfettiView;
-    private String spilTag, message;
+    private String spilTag;
     private boolean DRord;
+    String message ="";
 
     // Der oprettes et objekt af klassen Galgelogik
     Galgelogik logik = new Galgelogik();
@@ -53,9 +57,9 @@ public class Spil_akt extends Activity implements View.OnClickListener {
 
         konfettiView = findViewById(R.id.confetti);
 
+        Intent intent = getIntent();
+            message = intent.getStringExtra("ValgtOrd");
 
-        Bundle bundle = getIntent().getExtras();
-        message = bundle.getString("ValgtOrd");
 
         LoadPreferences();
 
@@ -80,17 +84,17 @@ public class Spil_akt extends Activity implements View.OnClickListener {
                     opdaterSkærm();
                 }
             }.execute();
-        }
-
-//        else if(message = logik.getOrdet()){
-//            logik.
-//        }
-
+        } else if(!Objects.equals(message, logik.getOrdet()) && message != null){
+            logik.setOrdet(message);}
         else {
             System.out.println("Henter prædefinerede ord");
             ordtype.setText("Ord valgt fra hukommenlsen");
             opdaterSkærm();
         }
+
+        infotekst.setText("Mon du kan gætte ordet " + spilTag +"? \n" +
+                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
+                "\n [ " + logik.getSynligtOrd() + " ]");
     }
 
     @Override
@@ -144,7 +148,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         if (logik.getAntalForkerteBogstaver() == 0) {
             img.setImageResource(R.drawable.galge);
         } else if (logik.getAntalForkerteBogstaver() == 1) {
-            img.setImageResource(R.drawable.forkert1);
+
         } else if (logik.getAntalForkerteBogstaver() == 2) {
             img.setImageResource(R.drawable.forkert2);
         } else if (logik.getAntalForkerteBogstaver() == 3) {

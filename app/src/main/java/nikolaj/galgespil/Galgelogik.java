@@ -36,6 +36,10 @@ public class Galgelogik { private ArrayList<String> muligeOrd = new ArrayList<St
         return ordet;
     }
 
+    public void setOrdet(String ordet) {
+        this.ordet = ordet;
+    }
+
     public int getAntalForkerteBogstaver() {
         return antalForkerteBogstaver;
     }

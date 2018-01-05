@@ -19,7 +19,7 @@ public class ListView_akt extends AppCompatActivity implements AdapterView.OnIte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String[] ord = {"Spil", "Computer", "Programmering", "Android", "Projekt", "Galgespil", "Smartphone", "Versionering", "String", "Layout"};
+        String[] ord = {"spil", "computer", "programmering", "android", "projekt", "galgespil", "smartphone", "versionering", "string", "layout"};
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1, ord);
 
