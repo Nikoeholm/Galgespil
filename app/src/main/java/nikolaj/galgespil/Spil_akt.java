@@ -31,7 +31,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     private KonfettiView konfettiView;
     private String spilTag;
     private boolean DRord;
-    String message ="";
+    private String message ="";
 
     // Der oprettes et objekt af klassen Galgelogik
     Galgelogik logik = new Galgelogik();
@@ -58,7 +58,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         konfettiView = findViewById(R.id.confetti);
 
         Intent intent = getIntent();
-            message = intent.getStringExtra("ValgtOrd");
+        message = intent.getStringExtra("ValgtOrd");
 
 
         LoadPreferences();
@@ -85,16 +85,14 @@ public class Spil_akt extends Activity implements View.OnClickListener {
                 }
             }.execute();
         } else if(!Objects.equals(message, logik.getOrdet()) && message != null){
-            logik.setOrdet(message);}
+            logik.setOrdet(message);
+            opdaterSkærm();
+        }
         else {
             System.out.println("Henter prædefinerede ord");
             ordtype.setText("Ord valgt fra hukommenlsen");
             opdaterSkærm();
         }
-
-        infotekst.setText("Mon du kan gætte ordet " + spilTag +"? \n" +
-                "Det består af " + logik.getOrdet().length() + " bogstaver! " +
-                "\n [ " + logik.getSynligtOrd() + " ]");
     }
 
     @Override
@@ -131,7 +129,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         FragmentManager fragmentmanager = getFragmentManager();
         FragmentTransaction fragmentTransmision = fragmentmanager.beginTransaction();
 
-         LoadPreferences();
+        LoadPreferences();
 
         System.out.println("Valgt ord gemt i Spil_akt: " + message);
 
@@ -148,7 +146,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         if (logik.getAntalForkerteBogstaver() == 0) {
             img.setImageResource(R.drawable.galge);
         } else if (logik.getAntalForkerteBogstaver() == 1) {
-
+            img.setImageResource(R.drawable.forkert1);
         } else if (logik.getAntalForkerteBogstaver() == 2) {
             img.setImageResource(R.drawable.forkert2);
         } else if (logik.getAntalForkerteBogstaver() == 3) {

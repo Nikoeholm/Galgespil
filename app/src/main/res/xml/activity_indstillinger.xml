@@ -11,13 +11,15 @@
         android:title="Hent ord fra DR's hjemmeside"
         android:key="indstillinger_DR"
         android:defaultValue="false"
+        android:disableDependentsState="true"
         android:summary="Vælg om ordet skal hentes fra DR's hjemmeside eller om det blot skal være fra den lokale hukommelse"/>
 
     <PreferenceScreen
         android:title="Vælg ord"
         android:key="valgt_ord"
         android:defaultValue="2"
-        android:summary="Vælg et bestemt ord">
+        android:dependency="indstillinger_DR"
+        android:summary="Vælg et bestemt ord som din ven skal gætte">
         <intent android:action="android.intent.action.VIEW" android:targetPackage="nikolaj.galgespil" android:targetClass="nikolaj.galgespil.ListView_akt" />
     </PreferenceScreen>
 

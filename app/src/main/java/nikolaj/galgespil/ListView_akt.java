@@ -39,6 +39,7 @@ public class ListView_akt extends AppCompatActivity implements AdapterView.OnIte
         Intent istart = new Intent(this, Spil_akt.class);
         istart.putExtra("ValgtOrd", item);
         startActivity(istart);
+        finish();
     }
 
 }
