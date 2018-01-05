@@ -3,8 +3,10 @@ package nikolaj.galgespil;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -171,7 +174,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
                     .setDirection(0.0, 359.0)
                     .setSpeed(1f, 5f)
                     .setFadeOutEnabled(true)
-                    .setTimeToLive(1500L)
+                    .setTimeToLive(2500L)
                     .addShapes(Shape.CIRCLE, Shape.RECT)
                     .addSizes(new Size(12, 5f))
                     .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
@@ -185,6 +188,17 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             arg.putInt("antalForkerte", logik.getAntalForkerteBogstaver());
             vinderFrag.setArguments(arg);
 
+            HighscoreDB highscoreDB = new HighscoreDB(this);
+            SQLiteDatabase db = highscoreDB.getWritableDatabase();
+
+//SpilTag og antal forkerte indsættes i Highscoren.
+            ContentValues række = new ContentValues();
+            række.put(HighscoreDB.NAVN, spilTag);
+            række.put(HighscoreDB.SCORE, logik.getAntalForkerteBogstaver());
+            db.insert(HighscoreDB.TABLE, null, række);
+            Toast.makeText(this, "Tilføjet til Highscore", Toast.LENGTH_LONG).show();
+
+            db.close();
 
         }
 

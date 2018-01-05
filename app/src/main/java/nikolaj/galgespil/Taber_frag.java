@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class Taber_frag extends Fragment implements View.OnClickListener {
 
     TextView taberBesked, ordet;
-    Button spiligen;
+    Button vælgOrd,tilfældigtOrd,afslut;
 
     public Taber_frag() {
         // Required empty public constructor
@@ -35,8 +35,14 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
         ordet = (TextView) view.findViewById(R.id.taber_ordet);
         ordet.setText(ord);
 
-        spiligen = view.findViewById(R.id.taber_spiligen);
-        spiligen.setOnClickListener(this);
+        vælgOrd = (Button) view.findViewById(R.id.taber_spiligen_liste);
+        vælgOrd.setOnClickListener(this);
+
+        tilfældigtOrd = (Button) view.findViewById(R.id.taber_spiligen_tilfældigt);
+        tilfældigtOrd.setOnClickListener(this);
+
+        afslut = view.findViewById(R.id.afslut);
+        afslut.setOnClickListener(this);
 
         return view;
     }
@@ -44,8 +50,15 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        getActivity().finish();
-        startActivity(new Intent(getActivity().getApplicationContext(), Spil_akt.class));
-
+        if(tilfældigtOrd == view) {
+            getActivity().finish();
+            startActivity(new Intent(getActivity().getApplicationContext(), Spil_akt.class));
+        }
+        else if (vælgOrd == view){
+            getActivity().finish();
+            startActivity(new Intent(getActivity().getApplicationContext(), ListView_akt.class));
+        }
+        else if(afslut == view)
+            getActivity().finish();
     }
 }

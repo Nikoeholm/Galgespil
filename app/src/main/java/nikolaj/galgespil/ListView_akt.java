@@ -1,8 +1,8 @@
 package nikolaj.galgespil;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +13,7 @@ import android.widget.Toast;
  * Created by Nikolaj on 04-01-2018.
  */
 
-public class ListView_akt extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ListView_akt extends Activity implements AdapterView.OnItemClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
