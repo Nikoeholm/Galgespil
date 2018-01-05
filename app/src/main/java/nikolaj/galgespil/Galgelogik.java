@@ -32,6 +32,8 @@ public class Galgelogik { private ArrayList<String> muligeOrd = new ArrayList<St
         return synligtOrd;
     }
 
+    public void setSynligtOrd(String synligtOrd) {this.synligtOrd = synligtOrd;}
+
     public String getOrdet() {
         return ordet;
     }

@@ -32,7 +32,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     private Button buttontjek;
     private ImageView img;
     private KonfettiView konfettiView;
-    private String spilTag;
+    private String spilTag, synligtOrd;
     private boolean DRord;
     private String message ="";
 
@@ -47,6 +47,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spil);
+
 
         infotekst = findViewById(R.id.textView_infotekst);
         besked = findViewById(R.id.textView_besked);
@@ -89,6 +90,15 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             }.execute();
         } else if(!Objects.equals(message, logik.getOrdet()) && message != null){
             logik.setOrdet(message);
+
+            int a = logik.getOrdet().length();
+            char[] arr = new char[a];
+            for (int i = 0; i < a; i++){
+                arr[i]='*';}
+            synligtOrd = String.copyValueOf(arr);
+            logik.setSynligtOrd(synligtOrd);
+
+            System.out.println("Det aktuelle synlige ord: " + synligtOrd);
             opdaterSkærm();
         }
         else {
@@ -134,7 +144,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
 
         LoadPreferences();
 
-        System.out.println("Valgt ord gemt i Spil_akt: " + message);
+        System.out.println("Valgt ord fra liste hentet i Spil_akt: " + message);
 
         infotekst.setText("Mon du kan gætte ordet " + spilTag +"? \n" +
                 "Det består af " + logik.getOrdet().length() + " bogstaver! " +
