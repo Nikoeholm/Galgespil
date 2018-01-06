@@ -9,10 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-/**
- * Created by Nikolaj on 04-01-2018.
- */
-
 public class ListView_akt extends Activity implements AdapterView.OnItemClickListener {
 
     @Override
