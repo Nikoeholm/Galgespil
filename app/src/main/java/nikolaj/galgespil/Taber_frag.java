@@ -3,7 +3,9 @@ package nikolaj.galgespil;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
 
     TextView taberBesked, ordet;
     Button vælgOrd,tilfældigtOrd,afslut;
+    Boolean DRord;
 
     public Taber_frag() {
         // Required empty public constructor
@@ -29,20 +32,23 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
         Spil_akt spil = (Spil_akt) getActivity();
         String ord = spil.getLogik().getOrdet();
 
-        taberBesked = (TextView) view.findViewById(R.id.taber_info);
+        taberBesked = view.findViewById(R.id.taber_info);
         taberBesked.setText("Du har tabt! Ordet var:");
 
-        ordet = (TextView) view.findViewById(R.id.taber_ordet);
+        ordet = view.findViewById(R.id.taber_ordet);
         ordet.setText(ord);
 
-        vælgOrd = (Button) view.findViewById(R.id.taber_spiligen_liste);
+        vælgOrd = view.findViewById(R.id.taber_spiligen_liste);
         vælgOrd.setOnClickListener(this);
 
-        tilfældigtOrd = (Button) view.findViewById(R.id.taber_spiligen_tilfældigt);
+        tilfældigtOrd = view.findViewById(R.id.taber_spiligen_tilfældigt);
         tilfældigtOrd.setOnClickListener(this);
 
         afslut = view.findViewById(R.id.afslut);
         afslut.setOnClickListener(this);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+        DRord = sharedPref.getBoolean("indstillinger_DR", false);
 
         return view;
     }
@@ -50,15 +56,23 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(tilfældigtOrd == view) {
+
+        if(tilfældigtOrd == view){
             getActivity().finish();
             startActivity(new Intent(getActivity().getApplicationContext(), Spil_akt.class));
         }
-        else if (vælgOrd == view){
-            getActivity().finish();
-            startActivity(new Intent(getActivity().getApplicationContext(), ListView_akt.class));
+        else if(vælgOrd == view){
+            if(DRord == false) {
+                getActivity().finish();
+                startActivity(new Intent(getActivity().getApplicationContext(), ListView_akt.class));
+            }
+            else {
+                getActivity().finish();
+                startActivity(new Intent(getActivity().getApplicationContext(), Indstillinger_akt.class));
+            }
         }
-        else if(afslut == view)
+        else if (afslut == view){
             getActivity().finish();
+        }
     }
 }

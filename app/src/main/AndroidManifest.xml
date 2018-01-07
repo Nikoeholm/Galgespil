@@ -24,6 +24,7 @@
         <activity android:name=".Indstillinger_akt" />
         <activity android:name=".ListView_akt" />
         <activity android:name=".Hichscore_akt"></activity>
+        <service android:enabled="true" android:name=".BackgroundSoundService" />
     </application>
 
 </manifest>

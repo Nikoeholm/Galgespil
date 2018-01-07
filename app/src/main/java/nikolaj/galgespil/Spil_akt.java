@@ -48,7 +48,6 @@ public class Spil_akt extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spil);
 
-
         infotekst = findViewById(R.id.textView_infotekst);
         besked = findViewById(R.id.textView_besked);
         ordtype = findViewById(R.id.textView_ordtype);

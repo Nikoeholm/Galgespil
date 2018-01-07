@@ -16,6 +16,9 @@ public class Velkomst_akt extends AppCompatActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_velkomst);
 
+        Intent svc=new Intent(this, BackgroundSoundService.class);
+        startService(svc);
+
         buttonstart = (Button) findViewById(R.id.button_startspil);
         buttonstart.setOnClickListener(this);
 

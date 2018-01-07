@@ -19,7 +19,7 @@
         android:key="valgt_ord"
         android:defaultValue="2"
         android:dependency="indstillinger_DR"
-        android:summary="Vælg et bestemt ord som din ven skal gætte">
+        android:summary="Vælg et bestemt ord som din ven skal gætte.\n(DR ord skal være slået fra)">
         <intent android:action="android.intent.action.VIEW" android:targetPackage="nikolaj.galgespil" android:targetClass="nikolaj.galgespil.ListView_akt" />
     </PreferenceScreen>
 
