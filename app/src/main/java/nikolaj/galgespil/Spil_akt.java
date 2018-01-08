@@ -70,6 +70,13 @@ public class Spil_akt extends Activity implements View.OnClickListener {
             ordtype.setText("Henter ord fra DRs server....");
 //Hentet fra AndroidElementer
             new AsyncTask() {
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    buttontjek.setEnabled(false);
+                }
+
                 @Override
                 protected Object doInBackground(Object... arg0) {
                     try {
@@ -84,6 +91,7 @@ public class Spil_akt extends Activity implements View.OnClickListener {
                 @Override
                 protected void onPostExecute(Object resultat) {
                     ordtype.setText("Status: \n" + resultat);
+                    buttontjek.setEnabled(true);
                     opdaterSkærm();
                 }
             }.execute();
